@@ -1,18 +1,21 @@
+import { Category } from '../../@types';
 import './Header.scss';
 
-function Header() {
+interface CategoryProps {
+  categories: Category[];
+}
+
+function Header({ categories }: CategoryProps) {
+  const items = categories.map((item) => (
+    <a key={item.id} className="menu-link menu-link" href={item.slug}>
+      {item.name}
+    </a>
+  ));
+
   return (
     <header className="menu" id="header">
       <nav className="menu-nav">
-        <a className="menu-link menu-link--selected" href="#header">
-          Accueil
-        </a>
-        <a className="menu-link" href="#header">
-          React
-        </a>
-        <a className="menu-link" href="#header">
-          Angular
-        </a>
+        {items}
         <button className="menu-btn" type="button">
           Activer le mode zen
         </button>

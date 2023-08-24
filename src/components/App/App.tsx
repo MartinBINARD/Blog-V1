@@ -7,13 +7,15 @@ import './App.scss';
 import categoriesData from '../../data/categories';
 import postsData from '../../data/posts';
 
+import { Category, Post } from '../../@types';
+
 function App() {
   console.log(categoriesData);
   console.log(postsData);
 
   return (
     <div className="app">
-      <Header />
+      <Header categories={categoriesData} />
       <Posts />
       <Footer />
     </div>
