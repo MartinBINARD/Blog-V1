@@ -1,14 +1,17 @@
+import { PostInterface } from '../../@types';
+
 import './Post.scss';
 
-function Post() {
+interface PostProps {
+  data: PostInterface;
+}
+
+function Post({ data }: PostProps) {
   return (
     <article className="post">
-      <h2 className="post-title">Titre du post</h2>
-      <div className="post-category">tag</div>
-      <p className="post-excerpt">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sed mollitia
-        ad incidunt cum sunt voluptatum, fuga quos vero aliquid veniam.
-      </p>
+      <h2 className="post-title">{data.title}</h2>
+      <div className="post-category">{data.category.name}</div>
+      <p className="post-excerpt">{data.excerpt}</p>
     </article>
   );
 }

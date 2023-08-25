@@ -1,14 +1,13 @@
-export interface Category {
+export interface CategoryInterface {
   id: number;
   slug: string;
   name: string;
 }
 
-export interface Post {
+export interface PostInterface {
   id: number;
-  CategoryId;
+  categoryId: number;
   slug: string;
-  name: string;
   title: string;
   excerpt: string;
   content: string;

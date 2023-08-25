@@ -1,23 +1,35 @@
-import { Category } from '../../@types';
+import React from 'react';
+import { CategoryInterface } from '../../@types';
 import './Header.scss';
 
-interface CategoryProps {
-  categories: Category[];
+interface HeaderProps {
+  categories: CategoryInterface[];
+  zenMode: boolean;
+  setZenMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Header({ categories }: CategoryProps) {
-  const items = categories.map((item) => (
-    <a key={item.id} className="menu-link menu-link" href={item.slug}>
-      {item.name}
+function Header({ categories, zenMode, setZenMode }: HeaderProps) {
+  const allCategories = categories.map((category) => (
+    <a key={category.id} className="menu-link" href={`/${category.slug}`}>
+      {category.name}
     </a>
   ));
+
+  const handleClick = () => {
+    setZenMode(!zenMode);
+  };
 
   return (
     <header className="menu" id="header">
       <nav className="menu-nav">
-        {items}
-        <button className="menu-btn" type="button">
-          Activer le mode zen
+        <a className="menu-link menu-link--selected" href="#header">
+          Accueil
+        </a>
+
+        {allCategories}
+
+        <button onClick={handleClick} className="menu-btn" type="button">
+          {zenMode ? 'Désactiver' : 'Activer '} le mode zen
         </button>
       </nav>
     </header>
