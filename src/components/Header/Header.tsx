@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 import { CategoryInterface } from '../../@types';
 import './Header.scss';
@@ -12,14 +12,16 @@ interface HeaderProps {
 function Header({ categories, zenMode, setZenMode }: HeaderProps) {
   const allCategories = categories.map((category) => (
     // Router 2 : ajout des liens
-    // → <Link to="">
-    <Link
+    // → <Link to=""> >>> génère des `<a href="">`
+    <NavLink
       key={category.id}
-      className="menu-link"
+      className={({ isActive }) =>
+        isActive ? 'menu-link menu-link--selected' : 'menu-link'
+      }
       to={`/category/${category.slug}`}
     >
       {category.name}
-    </Link>
+    </NavLink>
   ));
 
   const handleClick = () => {
@@ -29,11 +31,26 @@ function Header({ categories, zenMode, setZenMode }: HeaderProps) {
   return (
     <header className="menu" id="header">
       <nav className="menu-nav">
-        <Link className="menu-link menu-link--selected" to="/">
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? 'menu-link menu-link--selected' : 'menu-link'
+          }
+          to="/"
+        >
           Accueil
-        </Link>
+        </NavLink>
 
         {allCategories}
+
+        {/* Ajout d'un lien vers la page `À propos` */}
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? 'menu-link menu-link--selected' : 'menu-link'
+          }
+          to="/about"
+        >
+          À propos
+        </NavLink>
 
         <button className="menu-btn" type="button" onClick={handleClick}>
           {zenMode ? 'Désactiver' : 'Activer'} le mode zen
