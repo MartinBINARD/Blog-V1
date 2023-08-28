@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Posts from '../Posts/Posts';
 import Spinner from '../Spinner/Spinner';
+import NotFound from '../NotFound/NotFound';
 
 import { CategoryInterface, PostInterface } from '../../@types';
 
@@ -97,14 +99,28 @@ function App() {
         <Spinner />
       ) : (
         <>
+          {/* le Header sera présent sur TOUTES LES PAGES */}
           <Header
             categories={categories}
             zenMode={zenMode}
             setZenMode={setZenMode}
           />
 
-          {/* {postsLoading ? <Spinner /> : <Posts list={posts} />} */}
-          <Posts list={posts} />
+          {/* <Posts list={posts} /> */}
+          {/* ICI, c'est la partie qui va changer en fonction de l'URL */}
+          <Routes>
+            {/*
+              Router 3 : ajout des routes
+              si le `path` (chemin) de la route correspond à l'URL
+              alors on affiche `element`
+            */}
+            <Route path="/" element={<Posts list={posts} />} /> {/* accueil */}
+            {/* <Route path="/category/react" element={<h1>React</h1>} /> */}
+            {/* on utilise les routes paramétrées */}
+            <Route path="/category/:slug" element={<Posts list={posts} />} />
+            {/* Pour toutes les autres URL, on affiche la page d'erreur */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </>
       )}
       <Footer />

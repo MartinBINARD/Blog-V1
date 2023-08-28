@@ -1,3 +1,5 @@
+import { useParams } from 'react-router-dom';
+
 import Post from '../Post/Post';
 
 import { PostInterface } from '../../@types';
@@ -9,7 +11,24 @@ interface PostsProps {
 }
 
 function Posts({ list }: PostsProps) {
-  const items = list.map((post) => <Post key={post.id} data={post} />);
+  // React Router fournit un hook pour facilement
+  // récupérer les paramètres d'URL
+  // `useParams` renvoie un objet avec les paramètres en propriété
+  // { nomDuParamètre: valeur }
+  // const params = useParams();
+  // { slug: 'react' }
+  const { slug } = useParams();
+
+  // SI j'ai une catégorie dans l'URL
+  // ALORS je filtre mes articles
+  // SINON j'affiche tout
+  const filteredPosts = slug
+    ? list.filter(
+        (post) => post.category.slug.toLowerCase() === slug.toLowerCase()
+      )
+    : list; // ici c'est l'accueil
+
+  const items = filteredPosts.map((post) => <Post key={post.id} data={post} />);
 
   return (
     <main className="posts">

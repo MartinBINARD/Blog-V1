@@ -1,4 +1,5 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { CategoryInterface } from '../../@types';
 import './Header.scss';
 
@@ -10,9 +11,15 @@ interface HeaderProps {
 
 function Header({ categories, zenMode, setZenMode }: HeaderProps) {
   const allCategories = categories.map((category) => (
-    <a key={category.id} className="menu-link" href={`/${category.slug}`}>
+    // Router 2 : ajout des liens
+    // → <Link to="">
+    <Link
+      key={category.id}
+      className="menu-link"
+      to={`/category/${category.slug}`}
+    >
       {category.name}
-    </a>
+    </Link>
   ));
 
   const handleClick = () => {
@@ -22,14 +29,14 @@ function Header({ categories, zenMode, setZenMode }: HeaderProps) {
   return (
     <header className="menu" id="header">
       <nav className="menu-nav">
-        <a className="menu-link menu-link--selected" href="#header">
+        <Link className="menu-link menu-link--selected" to="/">
           Accueil
-        </a>
+        </Link>
 
         {allCategories}
 
-        <button onClick={handleClick} className="menu-btn" type="button">
-          {zenMode ? 'Désactiver' : 'Activer '} le mode zen
+        <button className="menu-btn" type="button" onClick={handleClick}>
+          {zenMode ? 'Désactiver' : 'Activer'} le mode zen
         </button>
       </nav>
     </header>
